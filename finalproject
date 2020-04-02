@@ -1,0 +1,658 @@
+# Goal is to provide workouts in a quick and easy way to help with the lack of personal trainers
+# to people ratio. Also, provide a cheap alternative for people
+# who have low self esteem and are not comfortable working with a personal trainer personally.
+
+
+# Refrences used Starting Out With Python, Third Edition by Tony Gaddis
+
+# Workout generator
+
+import tkinter
+import tkinter.messagebox
+import random
+
+# GUI
+
+class WorkoutGUI:
+    def __init__(self):
+        
+    # Main window
+        self.main_window = tkinter.Tk()
+        self.main_window.title("Workout Generator")
+        self.main_window.geometry('1200x600')
+
+    # Frames
+        self.top_frame = tkinter.Frame()
+        self.mid_frame = tkinter.Frame()
+        self.bottom_frame = tkinter.Frame()
+
+# TOP FRAME
+    # username widget
+        self.prompt_label1 = tkinter.Label(self.top_frame,
+                    text='Enter your Name:' ,bg="red", fg="yellow", font="none 12 bold")            
+
+        self.name_entry = tkinter.Entry(self.top_frame,
+                                        width=10)
+    # weight widget
+        self.prompt_label2 = tkinter.Label(self.top_frame,
+                    text='Enter your weight(lbs):' ,bg="red", fg="yellow", font="none 12 bold")            
+
+        self.weight_entry = tkinter.Entry(self.top_frame,
+                                        width=10)
+    # height widget
+        self.prompt_label3 = tkinter.Label(self.top_frame,
+                    text='Enter your height(in):' ,bg="red",fg="yellow",
+                                           font="none 12 bold")
+
+        self.height_entry = tkinter.Entry(self.top_frame,
+                                        width=10)
+    # gender widget
+        self.prompt_label4 = tkinter.Label(self.top_frame,
+                    text='Select your gender:' ,bg="red", fg="yellow",
+                                           font="none 12 bold")
+
+        self.gender_entry = tkinter.IntVar()
+        
+        self.gender_entry.set(1)
+
+    # radio buttons for gender choice
+        self.rb1 = tkinter.Radiobutton(self.top_frame,
+                                       text='Male',
+                                       variable=self.gender_entry,
+                                       value=1)
+        self.rb2 = tkinter.Radiobutton(self.top_frame,
+                                       text='Female',
+                                       variable=self.gender_entry,
+                                       value=2)
+
+    # goal widget
+        self.prompt_label5 = tkinter.Label(self.top_frame,
+                    text='Select your goal:' ,bg="red", fg="yellow",
+                                           font="none 12 bold")
+
+        self.goal_entry = tkinter.IntVar()
+
+        self.goal_entry.set(1)
+
+    # radio buttons for goal choice
+        self.rb3 = tkinter.Radiobutton(self.top_frame,
+                                       text='Lose Weight',
+                                       variable=self.goal_entry,
+                                       value=1)
+        self.rb4 = tkinter.Radiobutton(self.top_frame,
+                                       text='Maintain',
+                                       variable=self.goal_entry,
+                                       value=2)
+        self.rb5 = tkinter.Radiobutton(self.top_frame,
+                                       text='Build Muscle Mass',
+                                       variable=self.goal_entry,
+                                       value=3)
+
+    # packing widgets
+        self.prompt_label1.pack(side='top')
+        self.name_entry.pack(side='top')
+        self.prompt_label2.pack(side='top')
+        self.weight_entry.pack(side='top')
+        self.prompt_label3.pack(side='top')
+        self.height_entry.pack(side='top')
+        self.prompt_label4.pack(side='top')
+        self.rb1.pack(side='top')
+        self.rb2.pack(side='top')
+        self.prompt_label5.pack(side='left')
+        self.rb3.pack(side='left')
+        self.rb4.pack(side='left')
+        self.rb5.pack(side='left')
+
+# MIDDLE FRAME
+
+        self.descr_label = tkinter.Label(self.mid_frame,
+                                         text='Workout for you:')
+    
+        self.value = tkinter.StringVar()
+
+        self.workout_label = tkinter.Label(self.mid_frame,
+                                         textvariable=self.value,
+                                           width=250, height=20, bg="white")
+    # packing widgets
+
+        self.descr_label.pack(side='top')
+        self.workout_label.pack(side='bottom')
+
+# BOTTOM FRAME
+    # buttons
+        self.display_button = tkinter.Button(self.bottom_frame,
+                                          text='Get Workout!',
+                                          command=self.getworkout)
+        
+        self.quit_button = tkinter.Button(self.bottom_frame,
+                                          text='Quit',
+                                          command=self.main_window.destroy)
+
+
+    # pack the buttons
+        self.display_button.pack(side='left')
+        self.quit_button.pack(side='right')
+
+    # packing frames
+        self.top_frame.pack()
+        self.mid_frame.pack()
+        self.bottom_frame.pack()
+
+# fucnction to get outputs
+      
+    def getworkout(self):
+        
+        #Gather User information 
+        name = str(self.name_entry.get())
+        gymSerial = random.randint( 0, 10000)
+        
+        weight = float(self.weight_entry.get())
+                
+        height = float(self.height_entry.get()) 
+    
+        gender = (self.gender_entry.get())
+    
+        goal = (self.goal_entry.get())
+            
+    # Calculates BMI
+        
+        BMI = format((703 * weight) / height**2,".2f")
+       
+    # For Male under 150 1,2,3
+
+        WMU1 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs,\n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bench Pre 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "FRIDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SATURDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SUNDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"]
+        
+        WMU2 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs,\n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bench Pre 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "FRIDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SATURDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SUNDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"]
+        
+        WMU3 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs,\n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bench Pre 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "FRIDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SATURDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SUNDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"]
+
+    # For Male above 150 1,2,3
+
+        WMA1 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs,\n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bench Pre 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "FRIDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SATURDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SUNDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"]
+        
+        WMA2 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs,\n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bench Pre 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "FRIDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SATURDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SUNDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"]
+        
+        WMA3 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs,\n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bench Pre 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "FRIDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SATURDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"+
+                "SUNDAY: Bench Press 3x10 - 135lbs\
+	Incline Bench Press 3x10 - 135, 105, 105\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 50\
+	Dips on Bench\n\n"]
+
+   # For Female under 120 1,2,3
+        
+        WFU1 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x25,\
+	Hip Thrusts - 25lbs,\
+	Stairmaster 25 mins \n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bicep Curls 3x20 \
+	Cable Curls 3x20 \
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x20\
+	\n\n"+
+                "FRIDAY: Leg Press 3x15\
+	Lunges 4x12\
+	Front Squats 3x10\
+	Run 2 miles\
+	Abs 15 mins \n\n"+
+                "SATURDAY: Rest Day \n\n"+
+                "SUNDAY: Deadlifts 3x10\
+	Romanian Deadlifs 3x12\
+	Cable Lat Pull Downs 3x15\
+	Reverse Cable Flies 3x20\
+	Pulls up - 25lbs\
+	Run 2 miles \n\n"]
+        
+        WFU2 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Rest Day \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs,\n\n"+
+                "WEDNESDAY: Abs 30 mins,\
+        Run 1 miles,\
+        Stretch 10 mins \n\n"+
+                "THURSDAY: Shouler press 3x15\
+	Lateral Shoulder Raises 3x15\
+	Front Shoulder Raises 3x15\
+	Face Pulls \n\n"+
+                "FRIDAY: Cable Lat Pull Downs 3x10\
+	Cable Rows 3x20\
+	Good Mornings 3x12\
+	Deadlifts 4x12,10,8,5\
+	Run 1 mile\n\n"+
+                "SATURDAY: Bench Press 3x10\
+	Incline Bench Press 3x10\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 75 \n\n"+
+                "SUNDAY: Rest Day \n\n"]
+        
+        WFU3 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Bench Press 4x15,12,10,5,\
+	Incline Bench Press 3x12,\
+	Tricep Extensions 3x12,12,10\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 100,\
+	Weighted Dips on Bench,\
+	Pec Flys 3x12 \n\n"+
+                "TUESDAY: Squats 4x15,12,10,8\
+	Leg Press 3x12,\
+	Weighted Lunges 3x12,\
+	Weighted Calf Raises 3x15,\
+	Hip Thrusts 4x10 \n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: DeadLifts 4x15,12,10,3,\
+        Bent Over Rows 3x8-12,\
+        Reverse flys 3x 15,\
+        Landmine Rows/Row machine 3x15,\
+        Stretch 15 mins,\
+        Walk/Slow Jog 15 mins\n\n"+
+                "FRIDAY: Bicep Curls 3x20 \
+	Cable Curls 3x20 \
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x20\
+	Barbell Curls 3x10,\
+	Tricep Kickbacks 3x 15 \n\n"+
+                "SATURDAY: Squats 4x15,12,10,8\
+	Leg Press 3x12,\
+	Weighted Lunges 3x12,\
+	Weighted Calf Raises 3x15,\
+	Hip Thrusts 4x10,\
+	Stretch 15 mins,\
+        Walk/Slow Jog 15 mins\n\n"+
+                "SUNDAY: Rest Day \n\n"]
+
+    # For Female above 120 1,2,3
+
+        WFA1 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs\n\n"+
+                "TUESDAY: Rest Day \n\n"+
+                "WEDNESDAY: Shouler press 3x15\
+	Lateral Shoulder Raises 3x15\
+	Front Shoulder Raises 3x15\
+	Face Pulls,\
+	Run 2 miles \n\n"+
+                "THURSDAY: Bicep Curls 3x20 \
+	Cable Curls 3x20 \
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x20\
+	\n\n"+
+                "FRIDAY: Bench Press 3x15,\
+	Incline Bench Press 3x20,\
+	Tricep Extensions 3x12,\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 50,\
+	Dips on Bench\n\n"+
+                "SATURDAY: Rest Day \n\n"+
+                "SUNDAY: Deadlifts 3x15\
+	Romanian Deadlifs 3x12\
+	Cable Lat Pull Downs 3x25\
+	Reverse Cable Flies 3x20\
+	Pulls up to Faliure\
+	Run 2 miles \n\n"]
+        
+        WFA2 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Shouler press 3x15\
+	Lateral Shoulder Raises 3x15\
+	Front Shoulder Raises 3x15\
+	Face Pulls to faliure \n\n"+
+                "TUESDAY: Squats 3x10,\
+	Leg Press 3x10,\
+	Quad Extensions 3x12,\
+	Calf Raises 3x10,\
+	Hip Thrusts - 25lbs \n\n"+
+                "WEDNESDAY: Abs 30 mins,\
+        Run 1 miles,\
+        Stretch 10 mins \n\n"+
+                "THURSDAY: Rest Day \n\n"+
+                "FRIDAY: Cable Lat Pull Downs 3x10\
+	Cable Rows 3x20\
+	Good Mornings 3x12\
+	Deadlifts 4x12,10,8,5\
+	Run 1 mile\n\n"+
+                "SATURDAY: Rest Day \n\n"+
+                "SUNDAY: Bench Press 3x10\
+	Incline Bench Press 3x10\
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x10\
+	Push Up Pulls - 25lbs\
+	Push Ups 75 \n\n"]
+        
+        WFA3 = ["Your BMI is:",BMI,
+                "Your gym serial is:",gymSerial,
+                "\n\nMONDAY: Rest Day \n\n"+
+                "TUESDAY: Squats 4x15,12,10,8\
+	Leg Press 3x12,\
+	Weighted Lunges 3x12,\
+	Weighted Calf Raises 3x15,\
+	Hip Thrusts 4x12 \n\n"+
+                "WEDNESDAY: Rest Day \n\n"+
+                "THURSDAY: Bench Press 4x15,12,10,5,\
+	Incline Bench Press 3x12,\
+	Tricep Extensions 3x12,12,10\
+	Overhead Tricep Extensions 3x15,\
+	Push Ups 100,\
+	Weighted Dips on Bench to Faliure\n\n"+
+                "FRIDAY: Bicep Curls 3x20 \
+	Cable Curls 3x20 \
+	Tricep Extensions 3x12\
+	Overhead Tricep Extensions 3x20\
+	Barbell Curls 3x10,\
+	Tricep Kickbacks 3x 15 \n\n"+
+                "SATURDAY: Squats 4x15,12,10,8\
+	Leg Press 3x12,\
+	Weighted Lunges 3x12,\
+	Weighted Calf Raises 3x15,\
+	Hip Thrusts 4x10,\
+	Stretch 15 mins,\
+        Walk/Slow Jog 15 mins\n\n"+
+                "SUNDAY: DeadLifts 4x15,12,10,3,\
+        Bent Over Rows 3x8-12,\
+        Reverse flys 3x 15,\
+        Landmine Rows/Row machine 3x15,\
+        Stretch 15 mins,\
+        Walk/Slow Jog 15 mins,\
+	Reverse Flys 3x12 \n\n"]
+
+# sorts throgh workouts to choose approiate one based off of user inputs
+
+        if gender == 1 and weight>150 and goal==1:
+            self.value.set(WMA1)
+
+        elif gender == 1 and weight>150 and goal==2:
+            self.value.set(WMA2)
+            
+        elif gender == 1 and weight>150 and goal==3:
+            self.value.set(WMA3)
+            
+        elif gender == 1 and weight<=150 and goal==1:
+            self.value.set(WMU1)
+            
+        elif gender == 1 and weight<=150 and goal==2:
+            self.value.set(WMU2)
+            
+        elif gender == 1 and weight<=150 and goal==3:
+            self.value.set(WMU3)
+            
+        elif gender == 2 and weight>120 and goal==1:
+            self.value.set(WFA1)
+            
+        elif gender == 2 and weight>120 and goal==2:
+            self.value.set(WFA2)
+            
+        elif gender == 2 and weight>120 and goal==3:
+            self.value.set(WFA3)
+            
+        elif gender == 2 and weight<=120 and goal==1:
+            self.value.set(WFU1)
+            
+        elif gender == 2 and weight<=120 and goal==2:
+            self.value.set(WFU2)
+            
+        elif gender == 2 and weight<=120 and goal==3:
+            self.value.set(WFU3)
+        
+WorkoutGUI()
